@@ -1,0 +1,94 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# R and Single Variables
+
+## Working with Diamonds Dataset
+Loading the diamonds data set. 
+library(ggplot2) #must load the ggplot package first 
+data(diamonds) #loads the diamonds data set since it comes with the ggplot package 
+
+You need to run these command each time you launch RStudio to access the diamonds data set. RStudio won't remember which packages and data sets you loaded unless you change your preferences or save your workspace. 
+
+You should notice that the diamonds data set will be listed as a 'Promise' in the workspace. This is a special object in R, and you need to run a command on the data to fully load the data set. You need to run summary in order to get the data appear in the environments.
+```{r}
+library(ggplot2)
+data(diamonds)
+summary(diamonds)
+```
+
+There are 53940 observations and 10 variables in the dataset. There are 3 ordered factors in the dataset: cut, color, clarity
+
+```{r}
+str(diamonds)
+```
+```{r}
+levels(diamonds$color)
+```
+According to the documents, level 'D' is the best level for the diamonds.
+
+### Price Histogram
+
+Getting a histogram of the price shows a long-tailed distribution.
+```{r}
+qplot(data = diamonds, x = price,
+      color = I('black'), fill = I('#099DD9'),
+      binwidth = 100) +
+  xlab('Price of Diamond') + 
+  ylab('Number of diamonds in sample') +
+  scale_x_log10() +
+  scale_x_continuous(limits = c(0,15000), breaks = seq(0, 15000, 1000))
+```
+
+The shape of the price distribution is long-tailed.This means a large portion of the distribution is far from the 'head' or center of the distribution.
+
+Running summary on price, we'll see:
+```{r}
+summary(diamonds$price)
+```
+
+Now, I want to get more statistics on the price of the diamonds. I answer questions like:
+
+How many diamond cost less than $500?
+To answer this question, first I get a summary of the price for those under $500. 
+After executing the below command, the summary looks logical and gives true and false statements. True for those numbers below $500 and False for those above $500. 
+```{r}
+summary(diamonds$price < 500)
+
+```
+
+To make the above logical statement look nicer, I create a new variable called 'less_than_500' and assign it to 'NA'. 
+Then I create a conditional statement: If the price is under $500, return 1; else return 0.
+```{r}
+less_than_500 <- NA
+diamonds$less_than_500 <- ifelse(diamonds$price < 500, 1, 0)
+diamonds$less_than_500 <- factor(diamonds$less_than_500)
+summary(diamonds$less_than_500)
+```
+
+Next question, how many diamonds cost less than $250?
+The same approach for the previous question will be applied here. 
+```{r}
+less_than_250 <- NA
+diamonds$less_than_250 <- ifelse(diamonds$price < 250, 1, 0)
+diamonds$less_than_250 <- factor(diamonds$less_than_250)
+summary(diamonds$less_than_250)
+```
+
+The above calculations show that the conditional statement returns only those that do NOT cost less $250 dollars. 
+This means there are no diamonds that cost less than $250.
+
+Nest question, how many diamonds cost $15000 or more?
+Let's apply the same approach in the 2 previous questions to this question as well.
+```{r}
+more_than_15000 <- NA
+diamonds$more_than_15000 <- ifelse(diamonds$price >= 15000, 1, 0)
+diamonds$more_than_15000 <- factor(diamonds$more_than_15000)
+summary(diamonds$more_than_15000)
+```
+
+There are 1656 diamonds that cost $15000 or more.
+
