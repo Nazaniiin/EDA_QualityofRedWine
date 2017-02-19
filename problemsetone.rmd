@@ -308,4 +308,94 @@ qplot(data = diamonds, x = carat, binwidth = 0.1,
 
 From this plot, I can see that for example 0.3 and 1.01 sizes (carats) have more than 2000 counts, while anything after 2.0 has fewer than 2000 counts.
 
+### Gapminder Data
+
+The Gapminder website contains over 500 data sets with information about the world's population. My task will be to download a data set of my choice, and create 2-5 plots based on its data.
+
+I decide to go with the data about female students who are out of primary school. I downloaded the main file in xlsx, and converted it to CSV to read it in R. 
+
+```{r}
+getwd()
+female_out_of_school <- read.csv('data.csv', header = T, check.names = F)
+```
+
+After executing the command above, I have 'female_out_of_school' dataset created in my environment.
+
+There are many values in the dataset marked as '..' and I want to change them to NA, so that I can later filter them out of the actual values when I am creating plots. 
+
+I also name the first column in the dataset 'Country' since it is representing the countries.
+
+```{r}
+#Replacing the '..' value with NA
+female_out_of_school[female_out_of_school == '..'] = NA
+
+#Changing the name of the first column to 'country'
+colnames(female_out_of_school)[1] <- 'Country'
+```
+
+I do a little bit more cleanup on the original dataset. In my dataset, the values are between years 1999-2006. So I want to have a table with only these years present. 
+
+Also, I want to change the original table to a table where there are three columns: country, year, and count. Country and year are self-explanatory. Count will be the number of female students out of school for the specific year and country.
+
+To do this tidying up, I use the 'tidyr' package.
+
+```{r}
+install.packages("tidyr")
+library(tidyr)
+
+#Creating a new dataset 'female_out_gather' with 3 columns: country, year and count
+female_out_gather <- gather(female_out_of_school, year, count, 2:ncol(female_out_of_school))
+
+#Extracting years 1999-2006 from the dataset as only these years have meaningful values in them
+female_out_gather_1999_2006 <- subset(female_out_gather, year >= 1999, year <= 2006)
+```
+
+For getting plots, I use my 'female_out_gather_1999_2006' dataset that I have cleaned up already. I want to get a plot from the data, excluding the NA values.
+
+For the y-axis, I use 'as.numeric' to make sure the values returned are numbers.
+
+```{r}
+qplot(data = subset(female_out_gather_1999_2006, !is.na(count)),
+      x = year, y = as.numeric(count),
+      geom = 'boxplot', fill=year) +
+  ylab('Number of Female Students out of Primary School') +
+  ggsave('boxplot-1.png')
+```
+
+After getting the initial look on the plot, I see there are many outliers which have made the boxplots look very small. I use cartesian coordinates to magnify the boxes.
+
+```{r}
+qplot(data = subset(female_out_gather_1999_2006, !is.na(count)),
+      x = year, y = as.numeric(count),
+      geom = 'boxplot', fill=year) +
+    coord_cartesian(ylim = c(0, 250000)) +
+  ylab('Number of Female Students out of Primary School') +
+  ggsave('boxplot-2.png')
+```
+
+Using 'coord_cartesian(ylim = c(0, 250000))' as coordinates is good, but I want a closer look, to be able to distinguish the Medians in each year better.
+
+```{r}
+qplot(data = subset(female_out_gather_1999_2006, !is.na(count)),
+      x = year, y = as.numeric(count),
+      geom = 'boxplot', fill=year) +
+    coord_cartesian(ylim = c(0, 160000)) +
+  ylab('Number of Female Students out of Primary School') +
+  ggsave('boxplot-3.png')
+```
+
+Magnifying the boxplots by setting the limite between 0-160000 suffices for me to see that year 2006 has the highest Median in female students out of primary school. Also, year 2000 seems to have a wider range in comparison to other years.
+
+The plots show that the Median was decreasing from year 2000 until it reaches year 2006 with a sudden increase. So let's focus on year 2006 a bit more.
+
+```{r}
+out_of_school_2006 <- subset(female_out_gather_1999_2006, year == 2006)
+qplot(data = out_of_school_2006, x = as.numeric(count)) +
+  xlab('Number of Female Students out of Primary School in Year 2006') +
+  scale_x_log10() +
+  ggsave('plot-4.png')
+```
+
+Using log10, I could achieve a normal-ish distribution of the data.
+
 
