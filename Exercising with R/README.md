@@ -9,9 +9,9 @@ In this directory, I have worked with different datasets and used R to do explor
 
 I did the exercises in 3 categories:
 
-- R with Single Variables
-- R with Two Variables
-- R with Multiple Variables
+- R with Single Variables (problemsetone)
+- R with Two Variables (problemsettwo)
+- R with Multiple Variables (problemsetthree)
 
 For each category, I have provided an .rmd and a .pdf format.
 
