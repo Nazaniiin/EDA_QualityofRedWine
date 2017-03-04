@@ -1,7 +1,7 @@
 Random Exercises with Different Datasets in R
 ================================================
 **Note 1**
-This directory contains exploratory analysis on a few databases in R. I used these analysis to get myself familiar with working with R and learn analysis and visualizations in it. 
+This directory contains exploratory analysis on a few databases in R. I used these analysis to get myself familiar with data analysis and visualizations in R. 
 
 **Note 2**
 The main project I did in R after these exercises was to analyse a dataset on **Red Wine Quality** . Please find this project as well as the dataset from [Exploratory Data Analysis(EDA) with R](https://github.com/Nazaniiin/EDA-ExploratoryDataAnalysis)
