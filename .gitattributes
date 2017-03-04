@@ -1,1 +1,2 @@
 *.rmd linguist-language=RMarkdown
+*.r linguist-language=R
