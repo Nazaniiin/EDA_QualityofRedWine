@@ -1,0 +1,110 @@
+---
+title: "Exploratory Data Analysis on Red Wine Quality"
+output: pdf_document
+---
+
+```{r setup, echo=FALSE,include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE,message=FALSE, results='hide', warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(GGally)
+library(gridExtra)
+```
+
+# Getting to Know the Database
+
+Viewing the first 6 rows in the dataset to see how the data looks like.
+
+```{r, echo=FALSE,message=FALSE, warning=FALSE}
+redwine <- read.csv('../Project/wineQualityReds.csv', sep = ',')
+head(redwine)
+```
+
+For instance, some of the chemical properties that influence the quality of red wine are acidity level, sugar, PH level, alcohol, etc. The last column in the table specifies the quality (score between 0 to 10) of the wine based on all the chemicals.
+
+Now let's get information on different types of data in the dataset. According to the table below, `row number` and `quality` are of type integer, while the rest of the variables are numeric.
+
+```{r, echo=FALSE,message=FALSE, warning=FALSE}
+str(redwine)
+```
+
+I would like to take some numeric summary of the data from each variable in the dataset.
+
+```{r, echo=FALSE,message=FALSE, warning=FALSE}
+summary(redwine)
+```
+
+# Univariate Plots Section
+
+```{r, echo=FALSE,message=FALSE, warning=FALSE}
+ggplot(data = redwine,
+       aes(x=quality)) +
+  geom_histogram(colour = I('#741B3E'), fill = I('#741B3E'), binwidth = 0.5) +
+  scale_x_continuous(limits = c(0,10), breaks = seq(0,10,1)) +
+  xlab('Quality of Red Wine - Worst(0) to Best(10)') +
+  ylab('Number of Red Wines')
+
+ggsave('quality_hist.png', height = 4, width = 5, dpi = 600)
+```
+
+
+```{r, echo=FALSE,message=FALSE, warning=FALSE}
+get_histogram <- function(var, xlabel) {
+  return (qplot(x = var, data = redwine, xlab = xlabel, 
+                color= I('#741B3E'), fill = I('#741B3E')))
+}
+
+grid.arrange(get_histogram(redwine$fixed.acidity, 'Fixed Acidity'),
+get_histogram(redwine$volatile.acidity, 'Volatile Acidity'),
+get_histogram(redwine$citric.acid, 'Citric Acid'),
+get_histogram(redwine$residual.sugar, 'Residual Sugar'),
+get_histogram(redwine$chlorides, 'Chlorides'),
+get_histogram(redwine$free.sulfur.dioxide, 'Free Sulfur Dioxide'),
+get_histogram(redwine$total.sulfur.dioxide, 'Total Sulfur Dioxide'),
+get_histogram(redwine$density, 'Density'),
+get_histogram(redwine$pH, 'PH'),
+get_histogram(redwine$sulphates, 'Sulphates'),
+get_histogram(redwine$alcohol, 'Alcohol'),
+get_histogram(redwine$quality, 'Quality'),
+ncol = 3)
+```
+
+
+```{r, echo=FALSE,message=FALSE, warning=FALS}
+log10 <- ggplot(data = redwine,
+                aes(x=log10(total.sulfur.dioxide))) +
+  geom_histogram(color = I('#985871'), fill = I('#985871'), binwidth = 0.05) +
+  xlab('Log10 of Total Sulfur Dioxide') +
+  ylab('Count')
+
+normal <- ggplot(data = redwine,
+                 aes(x=total.sulfur.dioxide)) +
+  geom_histogram() +
+  xlab('Total Sulfur Dioxide') +
+  ylab('Count')
+
+grid.arrange(log10, normal, ncol=1)
+```
+
+
+```{r, echo=FALSE,message=FALSE, warning=FALS}
+log10_free <- ggplot(data = redwine,
+                aes(x=log10(free.sulfur.dioxide))) +
+  geom_histogram(color = I('#985871'), fill = I('#985871'), binwidth = 0.05) +
+  xlab('Log10 of Free Sulfur Dioxide') +
+  ylab('Count')
+
+normal_free <- ggplot(data = redwine,
+                 aes(x=free.sulfur.dioxide)) +
+  geom_histogram() +
+  xlab('Free Sulfur Dioxide') +
+  ylab('Count')
+
+grid.arrange(log10_free, normal_free, ncol=1)
+```
+
+
+
