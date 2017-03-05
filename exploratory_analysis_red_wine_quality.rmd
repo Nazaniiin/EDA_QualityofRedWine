@@ -8,6 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r, echo=FALSE,message=FALSE, results='hide', warning=FALSE}
+#Initial imports
 library(ggplot2)
 library(dplyr)
 library(GGally)
@@ -23,21 +24,27 @@ redwine <- read.csv('../Project/wineQualityReds.csv', sep = ',')
 head(redwine)
 ```
 
-For instance, some of the chemical properties that influence the quality of red wine are acidity level, sugar, PH level, alcohol, etc. The last column in the table specifies the quality (score between 0 to 10) of the wine based on all the chemicals.
+There are 11 chemicals in the table that can influence the quality of red wine. For instance acidity level, sugar, PH level, alcohol, etc. The last column in the table specifies the quality (score between 0 to 10) of the wine based on all the chemicals.
 
-Now let's get information on different types of data in the dataset. According to the table below, `row number` and `quality` are of type integer, while the rest of the variables are numeric.
+Now let's get some info on different types of data in the dataset. According to the table below, `row number` and `quality` are of type integer, while the rest of the variables are numeric.
 
 ```{r, echo=FALSE,message=FALSE, warning=FALSE}
 str(redwine)
 ```
 
-I would like to take some numeric summary of the data from each variable in the dataset.
+I would also like to take some numeric summary of the data from each variable in the dataset.
 
 ```{r, echo=FALSE,message=FALSE, warning=FALSE}
 summary(redwine)
 ```
 
+From the summary, the average quality of red wines in the database is 5.63, with the maximum ranking set to 8 and the minimum set to 3. Therefor, there is no red wine in the database with a quality of 10 or 0.
+
 # Univariate Plots Section
+
+I will now create some basic histograms for each chemical property in the table. 
+
+First I like to see how the `quality` property is distributed in the table: 
 
 ```{r, echo=FALSE,message=FALSE, warning=FALSE}
 ggplot(data = redwine,
@@ -50,6 +57,9 @@ ggplot(data = redwine,
 ggsave('quality_hist.png', height = 4, width = 5, dpi = 600)
 ```
 
+Based on the plot the majority of the red wines, about more than 1200, have either 5 or 6 ranking for their quality. About 200 red wines have quality ranking as 7, but the number is not as significant as 5 and 6. The rest are either 3,4 or 8.
+
+After looking at the quality distribution, I'd like to get a histogram of all the chemical properties - as well as quality - in the table. These histograms can also help me in finding out if any of values in the plots need to be changed to e.g. log10 for a smoother distribution.
 
 ```{r, echo=FALSE,message=FALSE, warning=FALSE}
 get_histogram <- function(var, xlabel) {
@@ -72,6 +82,7 @@ get_histogram(redwine$quality, 'Quality'),
 ncol = 3)
 ```
 
+Based on the above plots, I feel that `total.sulfur.dioxide` and `free.sulfur.dioxide` have distributions skewed to left, and I can use `log10` on their x-axis to change those distributions to normal. Let's see how this will look like.
 
 ```{r, echo=FALSE,message=FALSE, warning=FALS}
 log10 <- ggplot(data = redwine,
@@ -89,6 +100,9 @@ normal <- ggplot(data = redwine,
 grid.arrange(log10, normal, ncol=1)
 ```
 
+Based on the plots, as you can see, using `log10` on the x-axis for `Total Sulfur Dioxide` helped the distribution to look normal-ish.
+
+Applying `log10` on the x-axis does not work for `Free Sulfur Dioxide`, though. It change the distribution, but seems it is a bit more skewed to the right, rather than normally distributed.
 
 ```{r, echo=FALSE,message=FALSE, warning=FALS}
 log10_free <- ggplot(data = redwine,
