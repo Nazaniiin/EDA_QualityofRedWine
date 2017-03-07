@@ -890,18 +890,19 @@ Seems higher level of PH correlated with higher level of alchol and lower level 
 cor(redwine$alcohol, redwine$pH)
 ```
 
-
 ***
 
 ## Multivariate Analysis
 
-### Talk about some of the relationships you observed in this part of the investigation. Were there features that strengthened each other in terms of looking at your feature(s) of interest?
+### Talk about some of the relationships observed in this part of the investigation. Were there features that strengthened each other in terms of looking at feature(s) of interest?
 
 Overall it looked like a few chemical properties such as alcohol, volatile acidity, ph, and citric acid had more influence in quality of the wine. 
 
 Alcohol was one of the chemical properties that caught me by surprise. Initially before doing the investigation on data, I guessed higher levels of alcohol could influence the taste and quality of wine in a negative way. However, in all the analysis I did on alcohol, the higher the level, the higher the quality of wine, and less the amount of other bad chemicals like volatile acidity and total sulfur dioxide.
 
 Observing fixed acidity and PH showed there was a strong negative correlation of -0.682 between them; meaning the more basic the wine, the lower is its fixed acidity level. However, if the fixed acidity level is low, it bring a lower quality in wine.
+
+Analyzing this data makes me see that excellent wines have higher level of alcohol, and citric acid, with lower levels of volatile acidity and density. Poor wines have higher levels of volatile acidity and lower level of sulphates and alcohol.
 
 ### Were there any interesting or surprising interactions between features?
 
@@ -912,6 +913,17 @@ Alcohol and PH level seem to have a positive correlation with each other. Higher
 Relationship between Alcohol and Total Sulfur Dioxide was of interest for me as well. Since total sulfur dioxide bring a nose to the taste of wine, I initially guessed that it could have a positive correlation with the amount of alcohol in that wine, which is not true. 
 
 ### OPTIONAL: Did you create any models with your dataset? Discuss the strengths and limitations of your model.
+
+***
+
+## Final Plots and Summary
+
+
+
+
+## Reflection
+
+Other factors such as type of grape, country of origin, how old the wine is could be also interesting in finding our more about the quality of wine. Also, since quality itself is a qualitative factor, it also strongly depends on those who do the wine tasting. 
 
 
 
