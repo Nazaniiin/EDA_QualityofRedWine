@@ -1,7 +1,9 @@
-# Exploratory Data Analysis on Red Wine Quality
+# Exploratory Data Analysis Using R
 
-This project consists of two sections:
+This project consists of two sections: 
+
 1. Exploring R using diamonds and cars dataset
+
 2. Performing exploratory data analysis (EDA) on Red Wine Quality dataset
 
 ## Performing exploratory data analysis (EDA) on Red Wine Quality dataset
