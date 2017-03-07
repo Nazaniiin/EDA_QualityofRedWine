@@ -77,19 +77,19 @@ This dataset is public available for research. The details are described in [Cor
    For more information, read [Cortez et al., 2009].
 
    Input variables (based on physicochemical tests):
-   1 - fixed acidity (tartaric acid - g / dm^3)
-   2 - volatile acidity (acetic acid - g / dm^3)
-   3 - citric acid (g / dm^3)
-   4 - residual sugar (g / dm^3)
-   5 - chlorides (sodium chloride - g / dm^3
-   6 - free sulfur dioxide (mg / dm^3)
-   7 - total sulfur dioxide (mg / dm^3)
-   8 - density (g / cm^3)
-   9 - pH
-   10 - sulphates (potassium sulphate - g / dm3)
-   11 - alcohol (% by volume)
-   Output variable (based on sensory data): 
-   12 - quality (score between 0 and 10)
+   - fixed acidity (tartaric acid - g / dm^3) 
+   - volatile acidity (acetic acid - g / dm^3) 
+   - citric acid (g / dm^3) 
+   - residual sugar (g / dm^3) 
+   - chlorides (sodium chloride - g / dm^3) 
+   - free sulfur dioxide (mg / dm^3) 
+   - total sulfur dioxide (mg / dm^3) 
+   - density (g / cm^3) 
+   - pH 
+   - sulphates (potassium sulphate - g / dm3) 
+   - alcohol (% by volume) 
+   Output variable (based on sensory data):  
+   - quality (score between 0 and 10) 
 
 8. Missing Attribute Values: None
 
